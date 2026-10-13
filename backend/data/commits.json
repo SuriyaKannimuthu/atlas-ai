@@ -1,0 +1,56 @@
+[
+  {
+    "sha": "c1a9f3e",
+    "service": "checkout-api",
+    "author": "dev-ana",
+    "committed_at": "2026-10-09T16:42:00Z",
+    "message": "config: lower database pool max_size from 50 to 5 to reduce RDS connection count",
+    "files": ["config/database.yaml"],
+    "diff": "--- a/config/database.yaml\n+++ b/config/database.yaml\n@@ pool:\n-  max_size: 50\n-  max_overflow: 10\n+  max_size: 5\n+  max_overflow: 0\n   timeout_seconds: 30"
+  },
+  {
+    "sha": "7be21d0",
+    "service": "checkout-api",
+    "author": "dev-li",
+    "committed_at": "2026-10-09T18:05:00Z",
+    "message": "feat(cart): add gift card promotion banner",
+    "files": ["web/cart/PromoBanner.tsx", "web/cart/index.tsx"],
+    "diff": "+export function PromoBanner() { return <Banner variant=\"giftcard\" /> }"
+  },
+  {
+    "sha": "5d1e0b9",
+    "service": "checkout-api",
+    "author": "dev-ana",
+    "committed_at": "2026-10-06T12:30:00Z",
+    "message": "fix: correct currency rounding for JPY totals",
+    "files": ["checkout/pricing.py"],
+    "diff": "-    return round(amount, 2)\n+    return round(amount, 0 if currency == 'JPY' else 2)"
+  },
+  {
+    "sha": "4f0c2aa",
+    "service": "payments-service",
+    "author": "dependabot",
+    "committed_at": "2026-10-10T22:10:00Z",
+    "message": "chore(deps): bump stripe-client from 11.4.0 to 12.0.0",
+    "files": ["requirements.txt"],
+    "diff": "-stripe-client==11.4.0\n+stripe-client==12.0.0"
+  },
+  {
+    "sha": "e91b7c3",
+    "service": "payments-service",
+    "author": "dev-sam",
+    "committed_at": "2026-10-11T08:55:00Z",
+    "message": "refactor: pass idempotency_key through the charge pipeline",
+    "files": ["payments/charge.py"],
+    "diff": "-    return client.create_charge(amount, currency)\n+    return client.create_charge(amount, currency, idempotency_key=key)"
+  },
+  {
+    "sha": "a77d210",
+    "service": "auth-service",
+    "author": "dev-kim",
+    "committed_at": "2026-10-01T15:20:00Z",
+    "message": "docs: update local setup instructions",
+    "files": ["README.md"],
+    "diff": "+Run `make dev` to start the service locally."
+  }
+]
