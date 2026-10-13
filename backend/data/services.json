@@ -1,0 +1,34 @@
+[
+  {
+    "name": "checkout-api",
+    "team": "commerce-platform",
+    "channel": "#commerce-oncall",
+    "tier": 1,
+    "dependencies": ["postgres-orders", "payments-service", "redis-cart"],
+    "aliases": ["checkout", "checkout service", "cart api"]
+  },
+  {
+    "name": "payments-service",
+    "team": "payments",
+    "channel": "#payments-oncall",
+    "tier": 1,
+    "dependencies": ["stripe", "postgres-ledger"],
+    "aliases": ["payments", "payment service", "charges"]
+  },
+  {
+    "name": "auth-service",
+    "team": "identity",
+    "channel": "#identity-oncall",
+    "tier": 1,
+    "dependencies": ["redis-sessions", "postgres-users"],
+    "aliases": ["auth", "login", "identity", "sso"]
+  },
+  {
+    "name": "search-api",
+    "team": "discovery",
+    "channel": "#discovery-oncall",
+    "tier": 2,
+    "dependencies": ["opensearch"],
+    "aliases": ["search"]
+  }
+]

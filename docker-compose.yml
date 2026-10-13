@@ -1,0 +1,59 @@
+# Local stack: Postgres (app data + LangGraph checkpoints), Redis (rate limiting),
+# the FastAPI backend, and the Next.js frontend.
+#
+#   docker compose up --build
+#   open http://localhost:3000
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: atlas
+      POSTGRES_DB: atlas
+    ports: ["5432:5432"]
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atlas"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg://atlas:atlas@postgres:5432/atlas
+      CHECKPOINTER: postgres
+      CHECKPOINT_URL: postgresql://atlas:atlas@postgres:5432/atlas
+      REDIS_URL: redis://redis:6379/0
+      CORS_ORIGINS: http://localhost:3000
+      MODEL_PROVIDER: ${MODEL_PROVIDER:-}
+      MODEL_NAME: ${MODEL_NAME:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      LANGSMITH_TRACING: ${LANGSMITH_TRACING:-false}
+      LANGSMITH_API_KEY: ${LANGSMITH_API_KEY:-}
+      LANGSMITH_PROJECT: ${LANGSMITH_PROJECT:-atlas-ai}
+    ports: ["8000:8000"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  frontend:
+    build: ./frontend
+    environment:
+      ATLAS_API_URL: http://backend:8000
+      ATLAS_API_KEY: atlas-dev-key
+    ports: ["3000:3000"]
+    depends_on:
+      backend: { condition: service_healthy }
+
+volumes:
+  postgres-data:

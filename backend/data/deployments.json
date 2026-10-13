@@ -1,0 +1,38 @@
+[
+  {
+    "id": "d-2041",
+    "service": "checkout-api",
+    "deployed_at": "2026-10-10T14:00:00Z",
+    "previous_deployment": "d-2033",
+    "version": "v4.18.0",
+    "author": "release-bot",
+    "commits": ["c1a9f3e", "7be21d0"]
+  },
+  {
+    "id": "d-2033",
+    "service": "checkout-api",
+    "deployed_at": "2026-10-07T10:15:00Z",
+    "previous_deployment": "d-2027",
+    "version": "v4.17.2",
+    "author": "release-bot",
+    "commits": ["5d1e0b9"]
+  },
+  {
+    "id": "d-3107",
+    "service": "payments-service",
+    "deployed_at": "2026-10-11T09:30:00Z",
+    "previous_deployment": "d-3099",
+    "version": "v12.0.0",
+    "author": "release-bot",
+    "commits": ["4f0c2aa", "e91b7c3"]
+  },
+  {
+    "id": "d-1188",
+    "service": "auth-service",
+    "deployed_at": "2026-10-02T11:00:00Z",
+    "previous_deployment": "d-1181",
+    "version": "v2.9.4",
+    "author": "release-bot",
+    "commits": ["a77d210"]
+  }
+]
